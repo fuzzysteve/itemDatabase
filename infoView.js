@@ -44,9 +44,6 @@ function displayAttributes() {
     tbl.style.width = '100%';
     tbl.setAttribute('border', '1');
     for (var attribute in outputTree.attributes) {
-        if (attribute=="NULL") {
-            continue;
-        }
         var tbdy = document.createElement('tbody');
         header=tbdy.insertRow();
         cell=document.createElement("TH");
@@ -181,13 +178,15 @@ function attributes(attributeTree) {
                 displayTree[attributeTypes[key].categoryname]=Array();    
             }
             var myObj = new Object();
-            myObj[attributeTypes[key].displayname]=itemdata[key].value+" "+attributeTypes[key].unitname;
+            myObj[attributeTypes[key].displayname]=itemdata[key].value+" "+attributeTypes[key].displayunit;
             displayTree[attributeTypes[key].categoryname].push(myObj);
         } else {
             console.log(key);
         }
     }
 
+    delete displayTree.Graphics;
+    delete displayTree.NULL;
 
     return displayTree;
 }
