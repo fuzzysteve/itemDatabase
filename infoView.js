@@ -1,6 +1,9 @@
 // Nasty little hack, to keep down on requests
 var itemEndpoint="https://public-crest.eveonline.com/types/";
 
+var itemdata;
+
+
 var outputTree;
 
 function loadItem(typeID) {
@@ -16,8 +19,10 @@ function loadItem(typeID) {
 
 function formatOutput(itemData) {
     attributeTree=Array();
+    itemdata=Array();
     for (attribute=0; attribute < itemData.dogma.attributes.length;attribute++){
         attributeTree[itemData.dogma.attributes[attribute].attribute.id]=itemData.dogma.attributes[attribute].value;
+        itemdata[itemData.dogma.attributes[attribute].attribute.id]=itemData.dogma.attributes[attribute];
     }
     attributeTree.capacity=itemData.capacity;
     attributeTree.mass=itemData.mass;
@@ -32,12 +37,16 @@ function formatOutput(itemData) {
 }
 
 
+
 function displayAttributes() {
     var infoView = document.getElementById('infoView');
     var tbl = document.createElement('table');
     tbl.style.width = '100%';
     tbl.setAttribute('border', '1');
     for (var attribute in outputTree.attributes) {
+        if (attribute=="NULL") {
+            continue;
+        }
         var tbdy = document.createElement('tbody');
         header=tbdy.insertRow();
         cell=document.createElement("TH");
@@ -97,6 +106,47 @@ function displayAttributes() {
     infoView.appendChild(tbl);
 }
 
+function cleanattributes(attributeTree){
+
+    delete attributeTree[9];
+    delete attributeTree.capacity;
+    delete attributeTree.mass;
+    delete attributeTree.volume;
+    delete attributeTree[974];
+    delete attributeTree[975];
+    delete attributeTree[976];
+    delete attributeTree[977];
+    delete attributeTree[70];
+    delete attributeTree[265];
+    delete attributeTree[267];
+    delete attributeTree[268];
+    delete attributeTree[269];
+    delete attributeTree[270];
+    delete attributeTree[263];
+    delete attributeTree[479];
+    delete attributeTree[271];
+    delete attributeTree[272];
+    delete attributeTree[273];
+    delete attributeTree[274];
+    delete attributeTree[482];
+    delete attributeTree[55];
+    delete attributeTree[76];
+    delete attributeTree[192];
+    delete attributeTree[552];
+    delete attributeTree[564];
+    delete attributeTree[209];
+    delete attributeTree[208];
+    delete attributeTree[210];
+    delete attributeTree[211];
+    delete attributeTree[37];
+    delete attributeTree[600];
+    delete attributeTree[109];
+    delete attributeTree[110];
+    delete attributeTree[111];
+    delete attributeTree[113];
+}
+
+
 
 function attributes(attributeTree) {
     displayTree=Array();
@@ -121,16 +171,27 @@ function attributes(attributeTree) {
     if (!displayTree.Propulsion) {
         delete displayTree.Propulsion;
     }
+
+
+    cleanattributes(attributeTree);
+
+    for (var key in attributeTree) {
+        if (key in attributeTypes) {
+            if (!(attributeTypes[key].categoryname in displayTree)) {
+                displayTree[attributeTypes[key].categoryname]=Array();    
+            }
+            var myObj = new Object();
+            myObj[attributeTypes[key].displayname]=itemdata[key].value+" "+attributeTypes[key].unitname;
+            displayTree[attributeTypes[key].categoryname].push(myObj);
+        } else {
+            console.log(key);
+        }
+    }
+
+
     return displayTree;
 }
 
-function fitting(itemJson) {
-
-}
-
-function requirements(itemJson) {
-
-}
 
 function structureData(attributeTree) {
 
