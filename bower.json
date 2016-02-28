@@ -1,0 +1,9 @@
+{
+  "name": "infoDatabase",
+  "version": "0.0.1",
+  "dependencies": {
+    "jquery": "~1.11.3",
+    "jquery-ui": "*"
+  },
+  "private": true
+}
