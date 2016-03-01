@@ -6,8 +6,12 @@ var itemdata;
 
 var outputTree;
 
-function loadItem(typeID) {
-    lookupUrl=itemEndpoint+typeID+"/";
+function loadItem(type) {
+    if (isFinite(type)) {
+        lookupUrl=itemEndpoint+type+"/";
+    } else {
+        lookupUrl=type;
+    }
     $.getJSON(lookupUrl,function(data){
         formatOutput(data);
     });
@@ -29,7 +33,8 @@ function formatOutput(itemData) {
     attributeTree.volume=itemData.volume;
     outputTree=Array();
     outputTree.attributes=attributes(attributeTree);
-
+    itemdata.description=itemData.description;
+    itemdata.name=itemData.name;
 
 
     displayAttributes();
@@ -40,9 +45,17 @@ function formatOutput(itemData) {
 
 function displayAttributes() {
     var infoView = document.getElementById('infoView');
+    infoView.innerHTML ="";
+    header=document.createElement("h2");
+    header.innerHTML=itemdata.name;
+    contents=document.createElement("p");
+    contents.innerHTML=itemdata.description;
+    contents.className="itemDescription";
+    header.className="itemName";
+    infoView.appendChild(header);
+    infoView.appendChild(contents);
     var tbl = document.createElement('table');
-    tbl.style.width = '100%';
-    tbl.setAttribute('border', '1');
+    tbl.className = 'infoTable';
     for (var attribute in outputTree.attributes) {
         var tbdy = document.createElement('tbody');
         header=tbdy.insertRow();
@@ -88,7 +101,24 @@ function displayAttributes() {
                 contents=document.createTextNode(outputTree.attributes[attribute][i][key].explosive);
                 resist.appendChild(progress);
                 resist.appendChild(contents);
-            } else {
+            } else if (key == "Sensors") {
+                sensors=row.insertCell();
+                sensors.className="grav";
+                contents=document.createTextNode(outputTree.attributes[attribute][i][key].Gravometric);
+                sensors.appendChild(contents);
+                sensors=row.insertCell();
+                sensors.className="ladar";
+                contents=document.createTextNode(outputTree.attributes[attribute][i][key].Ladar);
+                sensors.appendChild(contents);
+                sensors=row.insertCell();
+                sensors.className="mag";
+                contents=document.createTextNode(outputTree.attributes[attribute][i][key].Magnetometric);
+                sensors.appendChild(contents);
+                sensors=row.insertCell();
+                sensors.className="radar";
+                contents=document.createTextNode(outputTree.attributes[attribute][i][key].Radar);
+                sensors.appendChild(contents);
+            } else  {
                 start=row.insertCell();
                 start.colSpan=3;
                 contents=document.createTextNode(key);
@@ -177,7 +207,7 @@ function attributes(attributeTree) {
             if (!(attributeTypes[key].categoryname in displayTree)) {
                 displayTree[attributeTypes[key].categoryname]=Array();    
             }
-            var myObj = new Object();
+            var myObj ={};
             myObj[attributeTypes[key].displayname]=itemdata[key].value+" "+attributeTypes[key].displayunit;
             displayTree[attributeTypes[key].categoryname].push(myObj);
         } else {
@@ -273,7 +303,7 @@ function targetingData(attributeTree) {
         sensors.Radar=formatDogma(208,attributeTree[208]);
         sensors.Magnetometric=formatDogma(210,attributeTree[210]);
         sensors.Gravometric=formatDogma(211,attributeTree[211]);
-        targeting.push(sensors);
+        targeting.push({"Sensors":sensors});
         return targeting;
     }
     return false;

@@ -1,0 +1,111 @@
+body
+{
+    font: 1em "Trebuchet MS",sans-serif;
+    background: black url(http://community.eveonline.com/ccp/img/layout/bg-new.jpg) top right no-repeat;
+    background-attachment: fixed;
+    color: rgb(200,200,200);
+    height:100%;
+    width:100%;
+}
+html {
+    min-height:100%;/* make sure it is at least as tall as the viewport */
+    width:100%;
+    position:relative
+}
+
+ul
+{
+    list-style-type: none;
+}
+
+li {
+    display:block;
+}
+
+.groupLink
+{
+    padding:2px;
+    margin:2px;
+    background-color: rgba(83, 83, 83, 0.95);
+    border: 0 solid black;
+    border-bottom:1px;
+    border-top:1px;
+    cursor:pointer;
+}
+
+
+#itemList {
+    position:relative;
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height:90%;
+    width:25%;
+    max-width:25%
+}
+
+#infoView {
+    position:absolute;
+    width:70%;
+    max-width:70%;
+    left:26%;
+    top:3%;
+    padding-left:5px;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.infoTable {
+    width:100%;
+     background-color: rgba(0, 0, 0, 0.5);
+
+
+}
+
+.attributeHead {
+    background-color: rgba(83, 83, 83, 0.95);
+}
+
+
+.emresist progress {
+    background-color:black;
+}
+.thermalresist progress {
+    background-color:black;
+}
+.explosiveresist progress {
+    background-color:black;
+}
+.kineticresist progress {
+    background-color:black;
+}
+.emresist progress::-webkit-progress-value {
+    background-color:cyan;
+}
+.thermalresist progress::-webkit-progress-value{
+    background-color:red;
+}
+.explosiveresist progress::-webkit-progress-value {
+    background-color:orange;
+}
+.kineticresist progress::-webkit-progress-value {
+    background-color:white;
+}
+.emresist progress::-moz-progress-bar {
+    background-color:cyan;
+}
+.thermalresist progress::-moz-progress-bar {
+    background-color:red;
+}
+.explosiveresist progress::-moz-progress-bar {
+    background-color:orange;
+}
+.kineticresist progress::-moz-progress-bar {
+    background-color:white;
+}
+.emresist {
+}
+.thermalresist {
+}
+.explosiveresist {
+}
+.kineticresist {
+}

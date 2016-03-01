@@ -3,14 +3,22 @@
 <title>Item Viewer</title>
 <script src="/info/bower_components/jquery/dist/jquery.min.js"></script>
 <script src="/info/infoView.js"></script>
+<script src="/info/itemList.js"></script>
 <script src="/info/units.js"></script>
 <script src="/info/attributes.js"></script>
+<link rel="stylesheet" href="infoView.css"/>
 </head>
 <body>
+<div>
+<div id="itemList">
+    <ul id="marketGroup">
+    </ul>
+</div>
 <div id="infoView">
 </div>
+</div>
 <script>
-loadItem(587);
+loadMarketGroups();
 </script>
 </body>
 </html>
