@@ -24,9 +24,11 @@ function loadItem(type) {
 function formatOutput(itemData) {
     attributeTree=Array();
     itemdata=Array();
-    for (attribute=0; attribute < itemData.dogma.attributes.length;attribute++){
-        attributeTree[itemData.dogma.attributes[attribute].attribute.id]=itemData.dogma.attributes[attribute].value;
-        itemdata[itemData.dogma.attributes[attribute].attribute.id]=itemData.dogma.attributes[attribute];
+    if ("attributes" in itemData.dogma) {
+        for (attribute=0; attribute < itemData.dogma.attributes.length;attribute++){
+            attributeTree[itemData.dogma.attributes[attribute].attribute.id]=itemData.dogma.attributes[attribute].value;
+            itemdata[itemData.dogma.attributes[attribute].attribute.id]=itemData.dogma.attributes[attribute];
+        }
     }
     attributeTree.capacity=itemData.capacity;
     attributeTree.mass=itemData.mass;
@@ -36,23 +38,25 @@ function formatOutput(itemData) {
     itemdata.description=itemData.description;
     itemdata.name=itemData.name;
 
-    for (effectnum=0;effectnum<itemData.dogma.effects.length;effectnum++){
-        switch (itemData.dogma.effects[effectnum].effect.id) {
-            case 12:
-                outputTree.attributes.Fitting.push({"Slot":"High Slot"});
-                break;
-            case 11:
-                outputTree.attributes.Fitting.push({"Slot":"Low Slot"});
-                break;
-            case 13:
-                outputTree.attributes.Fitting.push({"Slot":"Mid Slot"});
-                break;
-            case 42:
-                outputTree.attributes.Fitting.push({"Required":"Turret Slot"});
-                break;
-            case 40:
-                outputTree.attributes.Fitting.push({"Required":"Launcher Slot"});
-                break;
+    if ("effects" in itemData.dogma) {
+        for (effectnum=0;effectnum<itemData.dogma.effects.length;effectnum++){
+            switch (itemData.dogma.effects[effectnum].effect.id) {
+                case 12:
+                    outputTree.attributes.Fitting.push({"Slot":"High Slot"});
+                    break;
+                case 11:
+                    outputTree.attributes.Fitting.push({"Slot":"Low Slot"});
+                    break;
+                case 13:
+                    outputTree.attributes.Fitting.push({"Slot":"Mid Slot"});
+                    break;
+                case 42:
+                    outputTree.attributes.Fitting.push({"Required":"Turret Slot"});
+                    break;
+                case 40:
+                    outputTree.attributes.Fitting.push({"Required":"Launcher Slot"});
+                    break;
+            }
         }
     }
 
