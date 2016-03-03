@@ -109,3 +109,34 @@ li {
 }
 .kineticresist {
 }
+
+.traits a {
+    color:#C8C8C8;
+    text-decoration: none;
+}
+
+
+.descriptionbutton {
+    width:25%;
+    text-decoration: none;
+    display: inline-block;
+}
+.attributebutton {
+    width:25%;
+    text-decoration: none;
+    display: inline-block;
+}
+.fittingbutton {
+    width:25%;
+    text-decoration: none;
+    display: inline-block;
+}
+.blueprintbutton {
+    width:25%;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.attributeValue {
+    text-align:right;
+}
