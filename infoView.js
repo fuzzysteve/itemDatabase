@@ -424,7 +424,7 @@ function attributes(attributeTree) {
             }
             var myObj ={};
             if (attributeTypes[key].displayunit == 's') {
-                itemdata[key].value=itemdata[key].value/100;
+                itemdata[key].value=itemdata[key].value/1000;
             }
             myObj[attributeTypes[key].displayname]=itemdata[key].value+" "+attributeTypes[key].displayunit;
             displayTree[attributeTypes[key].categoryname].push(myObj);
