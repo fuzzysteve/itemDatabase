@@ -19,6 +19,14 @@
 </div>
 <script>
 loadMarketGroups();
+
+if (isFinite($.urlParam('typeid')) && ($.urlParam('typeid')!=null)) {
+    temp=$.urlParam('typeid');
+    presetTypeid=parseInt(temp);
+    updateInfo(presetTypeid);
+}
+
+
 </script>
 </body>
 </html>

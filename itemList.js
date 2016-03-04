@@ -38,7 +38,7 @@ var marketGroups="https://public-crest.eveonline.com/market/groups/";
                     });
                     console.log(itemcount);
                     if (itemcount>0) {
-                     $('.itemLink').click(function(event){event.stopPropagation();loadItem(event.target.dataset.cresthref);});
+                     $('.itemLink').click(function(event){event.stopPropagation();updateInfo(event.target.dataset.cresthref);});
                     }
                 });
             }
@@ -46,4 +46,17 @@ var marketGroups="https://public-crest.eveonline.com/market/groups/";
         }
     }
 
+
+    function updateInfo(itemid)
+    {
+        loadItem(itemid);
+        if (!isFinite(itemid)){
+            itemid=itemid.replace('https://public-crest.eveonline.com/types/','');
+            itemid=itemid.replace('/','');
+        }
+        try {
+            var stateObj = {};
+            history.pushState(stateObj, itemid, "/info/?typeid="+itemid);
+        } catch(err) { console.log("No pushstate");  }
+    }
 
