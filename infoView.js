@@ -220,33 +220,33 @@ function displayInfo() {
                 resist=row.insertCell();
                 resist.className="emresist";
                 progress=document.createElement("progress");
-                progress.value=outputTree.attributes[attribute][i][key].em.substring(0,outputTree.attributes[attribute][i][key].em.length-2);
+                progress.value=outputTree.attributes[attribute][i][key].em;
                 progress.max=100;
-                contents=document.createTextNode(outputTree.attributes[attribute][i][key].em);
+                contents=document.createTextNode(outputTree.attributes[attribute][i][key].em+" %");
                 resist.appendChild(progress);
                 resist.appendChild(contents);
                 resist=row.insertCell();
                 resist.className="thermalresist";
                 progress=document.createElement("progress");
-                progress.value=outputTree.attributes[attribute][i][key].thermal.substring(0,outputTree.attributes[attribute][i][key].thermal.length-2);
+                progress.value=outputTree.attributes[attribute][i][key].thermal;
                 progress.max=100;
-                contents=document.createTextNode(outputTree.attributes[attribute][i][key].thermal);
+                contents=document.createTextNode(outputTree.attributes[attribute][i][key].thermal+" %");
                 resist.appendChild(progress);
                 resist.appendChild(contents);
                 resist=row.insertCell();
                 resist.className="kineticresist";
                 progress=document.createElement("progress");
-                progress.value=outputTree.attributes[attribute][i][key].kinetic.substring(0,outputTree.attributes[attribute][i][key].kinetic.length-2);
+                progress.value=outputTree.attributes[attribute][i][key].kinetic;
                 progress.max=100;
-                contents=document.createTextNode(outputTree.attributes[attribute][i][key].kinetic);
+                contents=document.createTextNode(outputTree.attributes[attribute][i][key].kinetic+" %");
                 resist.appendChild(progress);
                 resist.appendChild(contents);
                 resist=row.insertCell();
                 resist.className="explosiveresist";
                 progress=document.createElement("progress");
-                progress.value=outputTree.attributes[attribute][i][key].explosive.substring(0,outputTree.attributes[attribute][i][key].explosive.length-2);
+                progress.value=outputTree.attributes[attribute][i][key].explosive;
                 progress.max=100;
-                contents=document.createTextNode(outputTree.attributes[attribute][i][key].explosive);
+                contents=document.createTextNode(outputTree.attributes[attribute][i][key].explosive+" %");
                 resist.appendChild(progress);
                 resist.appendChild(contents);
             } else if (key == "Sensors") {
@@ -557,7 +557,7 @@ function formatDogma(attributeID,value) {
         case 975:
         case 976:
         case 977:
-            return (Math.round((1-value)*100))+" "+units[attributeID].displayname;
+            return isFinite(Math.round((1-value)*100))?(Math.round((1-value)*100)):0;
         case 55:
         case 479:
             return value/1000+" "+units[attributeID].displayname;
