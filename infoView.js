@@ -465,12 +465,16 @@ function armorData(attributeTree) {
     armor=Array();
     if (265 in attributeTree) {
         armor.push({"Armor Hitpoints":formatDogma(265,attributeTree[265])});
+    }
+    if (267 in attributeTree) { 
         resists=Array();
         resists.em=formatDogma(267,attributeTree[267]);
         resists.thermal=formatDogma(270,attributeTree[270]);
         resists.kinetic=formatDogma(269,attributeTree[269]);
         resists.explosive=formatDogma(268,attributeTree[268]);
         armor.push({"Resists":resists});
+    }
+    if (armor.length) {
         return armor;
     }
     return false;
@@ -482,12 +486,16 @@ function shieldData(attributeTree) {
     if (263 in attributeTree) {
         shield.push({"Shield Capacity":formatDogma(263,attributeTree[263])});
         shield.push({"Shield recharge Time":formatDogma(479,attributeTree[479])});
+    }
+    if (271 in attributeTree) {
         resists=Array();
         resists.em=formatDogma(271,attributeTree[271]);
         resists.thermal=formatDogma(274,attributeTree[274]);
         resists.kinetic=formatDogma(273,attributeTree[273]);
         resists.explosive=formatDogma(272,attributeTree[272]);
         shield.push({"Resists":resists});
+    }
+    if (shield.length) {
         return shield;
     }
     return false;
