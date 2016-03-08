@@ -60,3 +60,6 @@ var marketGroups="https://public-crest.eveonline.com/market/groups/";
         } catch(err) { console.log("No pushstate");  }
     }
 
+    function singleView() {
+        document.cookie="ShowAllTabs=Yes";
+    }

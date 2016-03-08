@@ -102,6 +102,14 @@ function formatTraits(data) {
 function toggleTab(tabNum) {
 
     var tabs=document.getElementsByClassName("tab");
+
+    if (getCookie("ShowAllTabs")=='Yes') {
+        for (var show=0;show<tabs.length;show++) {
+            tabs[show].style.display = 'block';
+        }
+        return;
+    }
+
     for (var tab=0;tab<tabs.length;tab++) {
         tabs[tab].style.display = 'none'; 
     }
@@ -170,7 +178,6 @@ function displayInfo() {
     attributeDiv=document.createElement("div");
     attributeDiv.id="attributeDiv";
     attributeDiv.className="tab";
-    attributeDiv.style.display = 'none';
     descriptionDiv=document.createElement("div");
     descriptionDiv.id="descriptionDiv";
     descriptionDiv.className="tab";
@@ -195,7 +202,13 @@ function displayInfo() {
         }
     }
 
-
+    descriptionlinks=descriptionDiv.getElementsByTagName('a');
+    for (var link=0;link<descriptionlinks.length;link++) {
+        if (descriptionlinks[link].href.indexOf("showinfo")!==-1) {
+            addClickHandler(descriptionlinks[link],descriptionlinks[link].href.split(":")[1]);
+            descriptionlinks[link].href="#";
+        }
+    }
 
 
     infoView.appendChild(descriptionDiv);
@@ -284,7 +297,6 @@ function displayInfo() {
     
     if ("Fitting" in outputTree.attributes) {
         fittingDiv=document.createElement("div");
-        fittingDiv.style.display = 'none';
         fittingDiv.id="fittingDiv";
         fittingDiv.className="tab";
         var ftbl = document.createElement('table');
@@ -317,7 +329,6 @@ function displayInfo() {
     if ("blueprintData" in outputTree) {
         blueprintDiv=document.createElement("div");
         blueprintDiv.id="blueprintDiv";
-        blueprintDiv.style.display = 'none';
         blueprintDiv.className="tab";
         var btbl = document.createElement('table');
         btbl.className = 'infoTable';
@@ -334,8 +345,12 @@ function displayInfo() {
                 row=btbdy.insertRow();
                 start=row.insertCell();
                 start.colSpan=3;
+                click=document.createElement("span");
+                click.className="showInfo";
                 contents=document.createTextNode(outputTree.blueprintData.activityMaterials[activity][am].name);
-                start.appendChild(contents);
+                click.appendChild(contents);
+                addClickHandler(click,outputTree.blueprintData.activityMaterials[activity][am].typeid);
+                start.appendChild(click);
                 value=row.insertCell();
                 value.className="attributeValue";
                 contents=document.createTextNode(outputTree.blueprintData.activityMaterials[activity][am].quantity);
@@ -345,8 +360,14 @@ function displayInfo() {
         btbl.appendChild(btbdy);
         blueprintDiv.appendChild(btbl);
         infoView.appendChild(blueprintDiv);
+        toggleTab(1);
     }
 }
+
+function addClickHandler(element,typeid){
+    element.addEventListener("click",function() {updateInfo(typeid);},false);
+}
+
 
 function cleanattributes(attributeTree){
 
@@ -640,3 +661,15 @@ var activityName={'1':'Manufacturing','3':'TE Research','4':'ME research','5':'C
     };
   }
 })();
+
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1);
+        if (c.indexOf(name) === 0) return c.substring(name.length,c.length);
+    }
+    return "";
+} 

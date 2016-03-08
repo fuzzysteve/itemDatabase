@@ -33,6 +33,9 @@ li {
     cursor:pointer;
 }
 
+ul.subdisplay{
+    padding:2px;
+}
 
 #itemList {
     position:relative;
@@ -112,7 +115,6 @@ li {
 
 .traits a {
     color:#C8C8C8;
-    text-decoration: none;
 }
 
 
@@ -139,4 +141,8 @@ li {
 
 .attributeValue {
     text-align:right;
+}
+
+.clickme {
+     text-decoration: underline;
 }
