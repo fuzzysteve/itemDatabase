@@ -11,6 +11,11 @@
 <body>
 <div>
 <div id="itemList">
+        <button id="loadcache" onclick="loadSearchCache();">Search</button>
+        <button id="emptycache" onclick="emptyCache();" style="display:none;">Clear Cache</button>
+        <input type=text id="search" onchange="doSearch();" style="display:none;" />
+    <ul id="searchList">
+    </ul>
     <ul id="marketGroup">
     </ul>
     <span class="clickme" onclick="singleView();">Single Page View</span>

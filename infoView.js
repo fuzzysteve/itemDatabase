@@ -12,7 +12,7 @@ $.urlParam = function(name){
 
 
 // Nasty little hack, to keep down on requests
-var itemEndpoint="https://public-crest.eveonline.com/types/";
+var itemEndpoint="https://crest-tq.eveonline.com/types/";
 
 var itemdata;
 
