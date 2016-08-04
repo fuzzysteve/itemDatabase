@@ -2,6 +2,7 @@
 <head>
 <title>Item Viewer</title>
 <script src="/info/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 <script src="/info/infoView.js"></script>
 <script src="/info/itemList.js"></script>
 <script src="/info/units.js"></script>
@@ -10,6 +11,15 @@
 </head>
 <body>
 <div>
+<select id="language" onchange="setLanguage();">
+<option value="Default">Default</option>
+<option value="en">English</option>
+<option value="de">Deutsch</option>
+<option value="fr">Français</option>
+<option value="ru">Русский язык</option>
+<option value="ja">日本語</option>
+</select>
+
 <div id="itemList">
         <button id="loadcache" onclick="loadSearchCache();">Search</button>
         <button id="emptycache" onclick="emptyCache();" style="display:none;">Clear Cache</button>
@@ -24,6 +34,7 @@
 </div>
 </div>
 <script>
+ajaxSetup();
 loadMarketGroups();
 
 if (isFinite($.urlParam('typeid')) && ($.urlParam('typeid')!=null)) {

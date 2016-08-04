@@ -12,10 +12,10 @@ $.urlParam = function(name){
 
 
 // Nasty little hack, to keep down on requests
-var itemEndpoint="https://crest-tq.eveonline.com/types/";
+var itemEndpoint="https://crest-tq.eveonline.com/inventory/types/";
 
 var itemdata;
-
+var typeid;
 
 var outputTree;
 
@@ -50,6 +50,7 @@ function formatDogmaJSON(itemData) {
     outputTree.attributes=attributes(attributeTree);
     itemdata.description=itemData.description;
     itemdata.name=itemData.name;
+    typeid=itemData.id;
 
     if ("effects" in itemData.dogma) {
         for (effectnum=0;effectnum<itemData.dogma.effects.length;effectnum++){
@@ -181,12 +182,16 @@ function displayInfo() {
     descriptionDiv=document.createElement("div");
     descriptionDiv.id="descriptionDiv";
     descriptionDiv.className="tab";
-    header=document.createElement("h2");
-    header.innerHTML=itemdata.name;
     contents=document.createElement("p");
     contents.innerHTML=itemdata.description;
     contents.className="itemDescription";
+    header=document.createElement("h2");
     header.className="itemName";
+    image=document.createElement("img");
+    image.setAttribute('src','https://imageserver.eveonline.com/Type/'+typeid+'_64.png');
+    title=document.createTextNode(itemdata.name);
+    header.appendChild(image);
+    header.appendChild(title);
     infoView.appendChild(header);
     descriptionDiv.appendChild(contents);
 
@@ -518,7 +523,7 @@ function shieldData(attributeTree) {
         shield.push({"Shield Capacity":formatDogma(263,attributeTree[263])});
         shield.push({"Shield recharge Time":formatDogma(479,attributeTree[479])});
     }
-    if (271 in attributeTree) {
+    if (271 in attributeTree || 273 in attributeTree) {
         resists=Array();
         resists.em=formatDogma(271,attributeTree[271]);
         resists.thermal=formatDogma(274,attributeTree[274]);

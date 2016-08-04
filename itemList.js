@@ -51,7 +51,7 @@ var searchObj=Array();
     {
         loadItem(itemid);
         if (!isFinite(itemid)){
-            itemid=itemid.replace('https://crest-tq.eveonline.com/types/','');
+            itemid=itemid.replace('https://crest-tq.eveonline.com/inventory/types/','');
             itemid=itemid.replace('/','');
         }
         try {
@@ -113,6 +113,37 @@ function fillCache(page) {
         }
      });
 }
+
+function setLanguage() {
+    var cookieok=confirm("This needs a cookie and a reload. ctrl+F5");
+    if (cookieok){
+        if ($("#language").val()=="Default") {
+            $.cookie('info-language',null);
+        } else {
+            $.cookie('info-language',$("#language").val());
+        }
+    }
+}
+
+function ajaxSetup() {
+        var headers = {
+            "Accept": "application/json, charset=utf-8"
+        };
+        if ($.cookie('info-language')) {
+            headers['Accept-Language'] = $.cookie('info-language');
+        }
+        $.ajaxSetup({
+            accepts: "application/json, charset=utf-8",
+            crossDomain: true,
+            type: "GET",
+            dataType: "json",
+            headers: headers,
+            error: function (xhr, status, error) {
+                displayError(error);
+            }
+        });
+}
+
 
 function doSearch() {
     var searchString=$('#search').val().replace('/','').toLowerCase();
