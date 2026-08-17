@@ -12,7 +12,7 @@ $.urlParam = function(name){
 
 
 // Nasty little hack, to keep down on requests
-var itemEndpoint="https://crest-tq.eveonline.com/inventory/types/";
+var itemEndpoint="https://esi.evetech.net/universe/types/";
 
 var itemdata;
 var typeid;
@@ -20,27 +20,25 @@ var typeid;
 var outputTree;
 
 function loadItem(type) {
-    if (isFinite(type)) {
-        lookupUrl=itemEndpoint+type+"/";
-    } else {
-        lookupUrl=type;
-    }
-    $.getJSON(lookupUrl,function(data){
+    $.getJSON(itemEndpoint+type,function(data){
         formatDogmaJSON(data);
     });
 }
 
 
 
+function displayError(error) {
+        $("#data").children().replaceWith("<span>" + error + "</span>");
+}
 
 
 function formatDogmaJSON(itemData) {
     attributeTree=Array();
     itemdata=Array();
-    if ("attributes" in itemData.dogma) {
-        for (attribute=0; attribute < itemData.dogma.attributes.length;attribute++){
-            attributeTree[itemData.dogma.attributes[attribute].attribute.id]=itemData.dogma.attributes[attribute].value;
-            itemdata[itemData.dogma.attributes[attribute].attribute.id]=itemData.dogma.attributes[attribute];
+    if ("dogma_attributes" in itemData) {
+        for (attribute=0; attribute < itemData.dogma_attributes.length;attribute++){
+            attributeTree[itemData.dogma_attributes[attribute].attribute_id]=itemData.dogma_attributes[attribute].value;
+            itemdata[itemData.dogma_attributes[attribute].attribute_id]=itemData.dogma_attributes[attribute];
         }
     }
     attributeTree.capacity=itemData.capacity;
@@ -50,11 +48,11 @@ function formatDogmaJSON(itemData) {
     outputTree.attributes=attributes(attributeTree);
     itemdata.description=itemData.description;
     itemdata.name=itemData.name;
-    typeid=itemData.id;
+    typeid=itemData.type_id;
 
-    if ("effects" in itemData.dogma) {
-        for (effectnum=0;effectnum<itemData.dogma.effects.length;effectnum++){
-            switch (itemData.dogma.effects[effectnum].effect.id) {
+    if ("dogma_effects" in itemData) {
+        for (effectnum=0;effectnum<itemData.dogma_effects.length;effectnum++){
+            switch (itemData.dogma_effects[effectnum].effect_id) {
                 case 12:
                     outputTree.attributes.Fitting.push({"Slot":"High Slot"});
                     break;
@@ -74,7 +72,7 @@ function formatDogmaJSON(itemData) {
         }
     }
 
-    blueprintUrl="https://www.fuzzwork.co.uk/blueprint/api/blueprint.php?typeid="+itemData.id;
+    blueprintUrl="https://www.fuzzwork.co.uk/blueprint/api/blueprint.php?typeid="+itemData.type_id;
 
     $.getJSON(blueprintUrl,function(data){
         formatBlueprint(data);
